@@ -123,7 +123,12 @@ gulp.task('npmdep', function(callback) {
 })
 // Watchers
 gulp.task('watch', function() {
-  gulp.watch(devPaths.scss + '**/*.scss', ['sass'])
+  gulp.watch(devPaths.scss + '**/*.scss', function() {
+    return gulp.src("src/scss/*.scss")
+        .pipe(sass())
+        .pipe(gulp.dest("src/css"))
+        .pipe(browserSync.stream());
+  })
   gulp.watch(devPaths.scripts + '**/*.js', browserSync.reload)
   gulp.watch(devPaths.html + '**/*.html', browserSync.reload)
   gulp.watch(devPaths.html + '*.html', browserSync.reload)
